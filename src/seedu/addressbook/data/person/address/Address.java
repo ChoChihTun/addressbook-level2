@@ -15,6 +15,7 @@ public class Address {
     public static final int STREET = 1;
     public static final int UNIT = 2;
     public static final int POSTAL_CODE = 3;
+    public static final String COMMA_SEPARATOR = ", ";
 
     public final Block block = new Block();
     public final Street street = new Street();
@@ -58,8 +59,8 @@ public class Address {
 
     @Override
     public String toString() {
-        String stringAddress = block.getBlock() + ", " + street.getStreet() + ", "
-                + unit.getUnit() + ", " + postalCode.getPostalCode();
+        String stringAddress = block.getBlock() + COMMA_SEPARATOR + street.getStreet() + COMMA_SEPARATOR
+                + unit.getUnit() + COMMA_SEPARATOR + postalCode.getPostalCode();
         stringAddress = stringAddress.replaceAll(", $", "");
         return stringAddress;
     }
