@@ -13,39 +13,29 @@ public class Email extends Contact{
             "Person emails should be 2 alphanumeric/period strings separated by '@'";
     public static final String EMAIL_VALIDATION_REGEX = "[\\w\\.]+@[\\w\\.]+";
 
-    public final String value;
-    private boolean isPrivate;
 
     /**
      * Validates given email.
+     * @throws IllegalValueException if given email string is invalid.
      *
-     * @throws IllegalValueException if given email address string is invalid.
      */
     public Email(String email, boolean isPrivate) throws IllegalValueException {
-        this.isPrivate = isPrivate;
-        String trimmedEmail = email.trim();
-        if (!isValidEmail(trimmedEmail)) {
-            throw new IllegalValueException(MESSAGE_EMAIL_CONSTRAINTS);
-        }
-        this.value = trimmedEmail;
+       super(email, isPrivate, MESSAGE_EMAIL_CONSTRAINTS, EMAIL_VALIDATION_REGEX);
     }
 
     /**
      * Returns true if the given string is a valid person email.
-     */
-    /**
-     * Returns true if the given string is a valid person phone number.
      */
     public static boolean isValidEmail(String test) {
         return isValidProperty(test, EMAIL_VALIDATION_REGEX);
     }
 
     public String toString() {
-        return super.toString(value);
+        return super.toString();
     }
 
     public boolean equals(Object other) {
-        return super.equals(other, value);
+        return super.equals(other);
     }
 
     public int hashCode(String value) {
@@ -53,6 +43,6 @@ public class Email extends Contact{
     }
 
     public boolean isPrivate() {
-        return super.isPrivate(isPrivate);
+        return super.isPrivate();
     }
 }

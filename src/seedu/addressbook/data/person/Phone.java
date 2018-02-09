@@ -12,21 +12,13 @@ public class Phone extends Contact{
     public static final String MESSAGE_PHONE_CONSTRAINTS = "Person phone numbers should only contain numbers";
     public static final String PHONE_VALIDATION_REGEX = "\\d+";
 
-    public final String value;
-    private boolean isPrivate;
-
     /**
      * Validates given phone number.
      *
      * @throws IllegalValueException if given phone string is invalid.
      */
     public Phone(String phone, boolean isPrivate) throws IllegalValueException {
-        this.isPrivate = isPrivate;
-        String trimmedPhone = phone.trim();
-        if (!isValidPhone(trimmedPhone)) {
-            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
-        }
-        this.value = trimmedPhone;
+        super(phone, isPrivate, MESSAGE_PHONE_CONSTRAINTS, PHONE_VALIDATION_REGEX);
     }
 
     /**
@@ -37,11 +29,11 @@ public class Phone extends Contact{
     }
 
     public String toString() {
-        return super.toString(value);
+        return super.toString();
     }
 
     public boolean equals(Object other) {
-        return super.equals(other, value);
+        return super.equals(other);
     }
 
     public int hashCode(String value) {
@@ -49,6 +41,6 @@ public class Phone extends Contact{
     }
 
     public boolean isPrivate() {
-        return super.isPrivate(isPrivate);
+        return super.isPrivate();
     }
 }

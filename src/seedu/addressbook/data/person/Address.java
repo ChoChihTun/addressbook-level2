@@ -12,39 +12,28 @@ public class Address extends Contact{
     public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Person addresses can be in any format";
     public static final String ADDRESS_VALIDATION_REGEX = ".+";
 
-    public final String value;
-    private boolean isPrivate;
-
     /**
      * Validates given address.
      *
      * @throws IllegalValueException if given address string is invalid.
      */
     public Address(String address, boolean isPrivate) throws IllegalValueException {
-        String trimmedAddress = address.trim();
-        this.isPrivate = isPrivate;
-        if (!isValidAddress(trimmedAddress)) {
-            throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
-        }
-        this.value = trimmedAddress;
+        super(address, isPrivate, MESSAGE_ADDRESS_CONSTRAINTS, ADDRESS_VALIDATION_REGEX);
     }
 
     /**
      * Returns true if a given string is a valid person address.
-     */
-    /**
-     * Returns true if the given string is a valid person phone number.
      */
     public static boolean isValidAddress(String test) {
         return isValidProperty(test, ADDRESS_VALIDATION_REGEX);
     }
 
     public String toString() {
-        return super.toString(value);
+        return super.toString();
     }
 
     public boolean equals(Object other) {
-        return super.equals(other, value);
+        return super.equals(other);
     }
 
     public int hashCode(String value) {
@@ -52,6 +41,6 @@ public class Address extends Contact{
     }
 
     public boolean isPrivate() {
-        return super.isPrivate(isPrivate);
+        return super.isPrivate();
     }
 }
