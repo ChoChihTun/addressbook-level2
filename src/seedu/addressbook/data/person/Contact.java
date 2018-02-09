@@ -1,37 +1,30 @@
 package seedu.addressbook.data.person;
 
-import seedu.addressbook.data.exception.IllegalValueException;
 
 public class Contact {
 
-    private String value;
-    private boolean isPrivate;
-
     /**
-     * Returns true if the given string is a valid person phone number.
+     * Returns true if the given string is a valid person property.
      */
-    public static boolean isValidProperty(String test,String PROPERTY_VALIDATION_REGEX) {
+    public static boolean isValidProperty(String test, String PROPERTY_VALIDATION_REGEX) {
         return test.matches(PROPERTY_VALIDATION_REGEX);
     }
 
-    @Override
-    public String toString() {
+    public String toString(String value) {
         return value;
     }
 
-    @Override
-    public boolean equals(Object other) {
+    public boolean equals(Object other, String value) {
         return other == this // short circuit if same object
                 || (other instanceof Phone // instanceof handles nulls
-                && this.value.equals(((Phone) other).value)); // state check
+                && value.equals(((Phone) other).value)); // state check
     }
 
-    @Override
-    public int hashCode() {
+    public int hashCode(String value) {
         return value.hashCode();
     }
 
-    public boolean isPrivate() {
+    public boolean isPrivate(boolean isPrivate) {
         return isPrivate;
     }
 }
