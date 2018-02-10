@@ -1,6 +1,7 @@
 package seedu.addressbook.commands;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -10,14 +11,14 @@ import seedu.addressbook.data.person.ReadOnlyPerson;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case sensitive.
+ * Keyword matching is case insensitive.
  */
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
-            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
+            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " alice bob charlie";
 
@@ -50,11 +51,25 @@ public class FindCommand extends Command {
         final List<ReadOnlyPerson> matchedPersons = new ArrayList<>();
         for (ReadOnlyPerson person : addressBook.getAllPersons()) {
             final Set<String> wordsInName = new HashSet<>(person.getName().getWordsInName());
-            if (!Collections.disjoint(wordsInName, keywords)) {
+            Collection<String> lowerCaseKeywords = convertUpperCaseToLowerCase(keywords);
+            Collection<String> lowerCaseWordsInName = convertUpperCaseToLowerCase(wordsInName);
+            if (!Collections.disjoint(lowerCaseWordsInName, lowerCaseKeywords)) {
                 matchedPersons.add(person);
             }
         }
         return matchedPersons;
+    }
+
+    /**
+     * Converts collection of words into lower case
+     *
+     * @param words strings to be converted
+     * @return collection of lower case words
+     */
+    private static Collection<String> convertUpperCaseToLowerCase(Collection<String> words) {
+        List<String> lowerCaseWords = new ArrayList<>(words);
+        lowerCaseWords.replaceAll(String :: toLowerCase);
+        return lowerCaseWords;
     }
 
 }
