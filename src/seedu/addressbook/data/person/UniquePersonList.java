@@ -9,7 +9,7 @@ import java.util.List;
 
 import seedu.addressbook.common.Utils;
 import seedu.addressbook.data.exception.DuplicateDataException;
-
+import seedu.addressbook.data.exception.IllegalValueException;
 
 
 /**
@@ -36,6 +36,11 @@ public class UniquePersonList implements Iterable<Person> {
     public static class PersonNotFoundException extends Exception {}
 
     private final List<Person> internalList = new ArrayList<>();
+
+    private static final String PERSON_PROPERTY_NAME = "name";
+    private static final String PERSON_PROPERTY_EMAIL = "email";
+    private static final String PERSON_PROPERTY_PHONE = "phone";
+    private static final String PERSON_PROPERTY_ADDRESS = "address";
 
     /**
      * Constructs empty person list.
@@ -119,6 +124,37 @@ public class UniquePersonList implements Iterable<Person> {
         final boolean personFoundAndDeleted = internalList.remove(toRemove);
         if (!personFoundAndDeleted) {
             throw new PersonNotFoundException();
+        }
+    }
+
+    /**
+     * Replaces a person's target property with the new property.
+     *
+     * @param toEdit person whose property is to be edited
+     * @param property to be replaced
+     * @param newProperty replaces the current property
+     *
+     * @throws PersonNotFoundException if no such person could be found in the list.
+     * @throws IllegalValueException if new property string provided is invalid.
+     */
+    public void edit(Person toEdit, String property, String newProperty)
+            throws PersonNotFoundException, IllegalValueException {
+        if (!internalList.contains(toEdit)) {
+            throw new PersonNotFoundException();
+        }
+        switch (property) {
+            case PERSON_PROPERTY_NAME:
+                toEdit.editName(newProperty);
+                break;
+            case PERSON_PROPERTY_EMAIL:
+                toEdit.editEmail(newProperty);
+                break;
+            case PERSON_PROPERTY_PHONE:
+                toEdit.editPhone(newProperty);
+                break;
+            case PERSON_PROPERTY_ADDRESS:
+                toEdit.editAddress(newProperty);
+                break;
         }
     }
 

@@ -14,7 +14,7 @@ public class Name {
     public static final String EXAMPLE = "John Doe";
     public static final String MESSAGE_NAME_CONSTRAINTS = "Person names should be spaces or alphabetic characters";
     public static final String NAME_VALIDATION_REGEX = "[\\p{Alpha} ]+";
-    public final String fullName;
+    public String fullName;
 
     /**
      * Validates given name.
@@ -27,6 +27,20 @@ public class Name {
             throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
         }
         this.fullName = trimmedName;
+    }
+
+    /**
+     * Edits current name.
+     *
+     * @param newName Replaces current name with this name
+     * @throws IllegalValueException if given name string is invalid.
+     */
+    public void editCurrentName(String newName) throws IllegalValueException {
+        String trimmedNewName = newName.trim();
+        if (!isValidName(trimmedNewName)) {
+            throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
+        }
+        this.fullName = new String(trimmedNewName);
     }
 
     /**

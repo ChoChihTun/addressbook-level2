@@ -39,6 +39,8 @@ public class TextUi {
     /** Format of a comment input line. Comment lines are silently consumed when reading user input. */
     private static final String COMMENT_LINE_FORMAT_REGEX = "#.*";
 
+    private static final String NEW_PROPERTY_PROMPT = "Enter new %1$s: ";
+
     private final Scanner in;
     private final PrintStream out;
 
@@ -89,6 +91,19 @@ public class TextUi {
 
         showToUser("[Command entered:" + fullInputLine + "]");
         return fullInputLine;
+    }
+
+    /**
+     * Prompts for the new property and reads the text entered by the user.
+     *
+     * @param property the property that has to be edited
+     * @return new property entered by the user.
+     */
+    public String getNewProperty(String property) {
+        out.print(LINE_PREFIX + String.format(NEW_PROPERTY_PROMPT, property));
+        String newProperty = in.next();
+        showToUser("[" + property + " entered: " + newProperty + "]");
+        return newProperty;
     }
 
 

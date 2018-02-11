@@ -2,6 +2,7 @@ package seedu.addressbook.parser;
 
 import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.addressbook.common.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.addressbook.common.Messages.MESSAGE_INVALID_PERSON_PROPERTY;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -15,6 +16,7 @@ import seedu.addressbook.commands.AddCommand;
 import seedu.addressbook.commands.ClearCommand;
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.DeleteCommand;
+import seedu.addressbook.commands.EditCommand;
 import seedu.addressbook.commands.ExitCommand;
 import seedu.addressbook.commands.FindCommand;
 import seedu.addressbook.commands.HelpCommand;
@@ -23,24 +25,28 @@ import seedu.addressbook.commands.ListCommand;
 import seedu.addressbook.commands.ViewAllCommand;
 import seedu.addressbook.commands.ViewCommand;
 import seedu.addressbook.data.exception.IllegalValueException;
+import seedu.addressbook.data.exception.InvalidPropertyException;
 
 /**
  * Parses user input.
  */
 public class Parser {
 
-    public static final Pattern PERSON_INDEX_ARGS_FORMAT = Pattern.compile("(?<targetIndex>.+)");
+    private static final Pattern PERSON_INDEX_ARGS_FORMAT = Pattern.compile("(?<targetIndex>.+)");
 
-    public static final Pattern KEYWORDS_ARGS_FORMAT =
+    private static final Pattern KEYWORDS_ARGS_FORMAT =
             Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
 
-    public static final Pattern PERSON_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
+    private static final Pattern PERSON_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
             Pattern.compile("(?<name>[^/]+)"
                     + " (?<isPhonePrivate>p?)p/(?<phone>[^/]+)"
                     + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
 
+    private static final Pattern EDIT_PERSON_ARGS_FORMAT = Pattern.compile("(?<targetIndex>.+\\S)");
+
+    private static final Pattern EDIT_PERSON_PROPERTY_FORMAT = Pattern.compile("(?<property>\\b(name|address|email|phone)\\b)");
 
     /**
      * Signals that the user input could not be parsed.
@@ -54,7 +60,7 @@ public class Parser {
     /**
      * Used for initial separation of command word and args.
      */
-    public static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+    private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
     public Parser() {}
 
@@ -80,6 +86,9 @@ public class Parser {
 
         case DeleteCommand.COMMAND_WORD:
             return prepareDelete(arguments);
+
+        case EditCommand.COMMAND_WORD:
+            return prepareEdit(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
@@ -177,6 +186,34 @@ public class Parser {
     }
 
     /**
+     * Parses arguments in the context of the edit person command.
+     * If arguments are valid, prompt user for new property.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareEdit(String args) {
+        final Matcher matcher = EDIT_PERSON_ARGS_FORMAT.matcher(args.trim());
+        // Validate arg string format
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+        int indexOfDelimiterInArgs = args.trim().indexOf(" ");
+        try {
+            final int targetIndex = parseArgsAsDisplayedIndex(args.trim().substring(0,indexOfDelimiterInArgs));
+            final String property = parseArgsAsInputProperty(args.trim().substring(indexOfDelimiterInArgs));
+            return new EditCommand(targetIndex, property);
+        } catch (ParseException pe) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        } catch (NumberFormatException nfe) {
+            return new IncorrectCommand(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        } catch (InvalidPropertyException ipe) {
+            return new IncorrectCommand(MESSAGE_INVALID_PERSON_PROPERTY);
+        }
+    }
+
+
+    /**
      * Parses arguments in the context of the view command.
      *
      * @param args full command args string
@@ -230,6 +267,20 @@ public class Parser {
         return Integer.parseInt(matcher.group("targetIndex"));
     }
 
+    /**
+     * Parses the given arguments string as a person's property.
+     *
+     * @param args arguments string to parse as person property
+     * @return the parsed property
+     * @throws InvalidPropertyException if the given property is invalid.
+     */
+    private String parseArgsAsInputProperty(String args) throws InvalidPropertyException{
+        final Matcher matcher = EDIT_PERSON_PROPERTY_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            throw new InvalidPropertyException(MESSAGE_INVALID_PERSON_PROPERTY);
+        }
+        return matcher.group("property");
+    }
 
     /**
      * Parses arguments in the context of the find person command.

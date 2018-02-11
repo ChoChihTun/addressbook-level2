@@ -1,5 +1,6 @@
 package seedu.addressbook.data.person;
 
+import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.tag.UniqueTagList;
 
 import java.util.Objects;
@@ -16,6 +17,7 @@ public class Person implements ReadOnlyPerson {
     private Address address;
 
     private final UniqueTagList tags;
+
     /**
      * Assumption: Every field must be present and not null.
      */
@@ -32,6 +34,19 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getTags());
+    }
+
+    public void editName(String newName) throws IllegalValueException {
+        name.editCurrentName(newName);
+    }
+    public void editEmail(String newEmail) throws IllegalValueException {
+        email.editCurrentEmail(newEmail);
+    }
+    public void editPhone(String newPhone) throws IllegalValueException {
+        phone.editCurrentPhone(newPhone);
+    }
+    public void editAddress (String newAddress) throws IllegalValueException {
+        address.editCurrentAddress(newAddress);
     }
 
     @Override

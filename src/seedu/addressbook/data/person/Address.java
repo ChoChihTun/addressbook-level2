@@ -12,7 +12,7 @@ public class Address {
     public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Person addresses can be in any format";
     public static final String ADDRESS_VALIDATION_REGEX = ".+";
 
-    public final String value;
+    public String value;
     private boolean isPrivate;
 
     /**
@@ -27,6 +27,20 @@ public class Address {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
         this.value = trimmedAddress;
+    }
+
+    /**
+     * Edits current address.
+     *
+     * @param newAddress replaces current address with this address
+     * @throws IllegalValueException if given address string is invalid.
+     */
+    public void editCurrentAddress(String newAddress) throws IllegalValueException {
+        String trimmedNewAddress = newAddress.trim();
+        if (!isValidAddress(trimmedNewAddress)) {
+            throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
+        }
+        this.value = new String(trimmedNewAddress);
     }
 
     /**
