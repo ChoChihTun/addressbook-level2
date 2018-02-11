@@ -2,7 +2,7 @@ package seedu.addressbook.parser;
 
 import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.addressbook.common.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-import static seedu.addressbook.common.Messages.MESSAGE_INVALID_PERSON_PROPERTY;
+import static seedu.addressbook.common.Messages.MESSAGE_INVALID_PERSON_DETAIL;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -25,7 +25,7 @@ import seedu.addressbook.commands.ListCommand;
 import seedu.addressbook.commands.ViewAllCommand;
 import seedu.addressbook.commands.ViewCommand;
 import seedu.addressbook.data.exception.IllegalValueException;
-import seedu.addressbook.data.exception.InvalidPropertyException;
+import seedu.addressbook.data.exception.InvalidDetailException;
 
 /**
  * Parses user input.
@@ -46,7 +46,7 @@ public class Parser {
 
     private static final Pattern EDIT_PERSON_ARGS_FORMAT = Pattern.compile("(?<targetIndex>.+\\S)");
 
-    private static final Pattern EDIT_PERSON_PROPERTY_FORMAT = Pattern.compile("(?<property>\\b(name|address|email|phone)\\b)");
+    private static final Pattern EDIT_PERSON_DETAIL_FORMAT = Pattern.compile("(?<detail>\\b(name|address|email|phone)\\b)");
 
     /**
      * Signals that the user input could not be parsed.
@@ -187,7 +187,7 @@ public class Parser {
 
     /**
      * Parses arguments in the context of the edit person command.
-     * If arguments are valid, prompt user for new property.
+     * If arguments are valid, prompt user for new detail.
      *
      * @param args full command args string
      * @return the prepared command
@@ -201,14 +201,14 @@ public class Parser {
         int indexOfDelimiterInArgs = args.trim().indexOf(" ");
         try {
             final int targetIndex = parseArgsAsDisplayedIndex(args.trim().substring(0,indexOfDelimiterInArgs));
-            final String property = parseArgsAsInputProperty(args.trim().substring(indexOfDelimiterInArgs));
-            return new EditCommand(targetIndex, property);
+            final String detail = parseArgsAsInputDetail(args.trim().substring(indexOfDelimiterInArgs));
+            return new EditCommand(targetIndex, detail);
         } catch (ParseException pe) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         } catch (NumberFormatException nfe) {
             return new IncorrectCommand(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        } catch (InvalidPropertyException ipe) {
-            return new IncorrectCommand(MESSAGE_INVALID_PERSON_PROPERTY);
+        } catch (InvalidDetailException ipe) {
+            return new IncorrectCommand(MESSAGE_INVALID_PERSON_DETAIL);
         }
     }
 
@@ -268,18 +268,18 @@ public class Parser {
     }
 
     /**
-     * Parses the given arguments string as a person's property.
+     * Parses the given arguments string as a person's detail.
      *
-     * @param args arguments string to parse as person property
-     * @return the parsed property
-     * @throws InvalidPropertyException if the given property is invalid.
+     * @param args arguments string to parse as person detail
+     * @return the parsed detail
+     * @throws InvalidDetailException if the given detail is invalid.
      */
-    private String parseArgsAsInputProperty(String args) throws InvalidPropertyException{
-        final Matcher matcher = EDIT_PERSON_PROPERTY_FORMAT.matcher(args.trim());
+    private String parseArgsAsInputDetail(String args) throws InvalidDetailException {
+        final Matcher matcher = EDIT_PERSON_DETAIL_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
-            throw new InvalidPropertyException(MESSAGE_INVALID_PERSON_PROPERTY);
+            throw new InvalidDetailException(MESSAGE_INVALID_PERSON_DETAIL);
         }
-        return matcher.group("property");
+        return matcher.group("detail");
     }
 
     /**

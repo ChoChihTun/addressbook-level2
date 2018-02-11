@@ -101,17 +101,17 @@ public class AddressBook {
     }
 
     /**
-     * Replaces a person's target property with the new property.
+     * Replaces a person's target detail with the new detail.
      *
-     * @param toEdit person whose property is to be edited
-     * @param property to be replaced
-     * @param newProperty replaces the current property
+     * @param toEdit person whose detail is to be edited
+     * @param detail to be replaced
+     * @param newDetail replaces the current detail
      *
      * @throws PersonNotFoundException if no such person could be found in the list.
-     * @throws IllegalValueException if new property string provided is invalid.
+     * @throws IllegalValueException if new detail string provided is invalid.
      */
-    public void editPerson(Person toEdit, String property, String newProperty) throws PersonNotFoundException, IllegalValueException {
-        allPersons.edit(toEdit, property, newProperty);
+    public void editPerson(Person toEdit, String detail, String newDetail) throws PersonNotFoundException, IllegalValueException {
+        allPersons.edit(toEdit, detail, newDetail);
     }
 
     /**

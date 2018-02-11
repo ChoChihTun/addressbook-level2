@@ -37,10 +37,10 @@ public class UniquePersonList implements Iterable<Person> {
 
     private final List<Person> internalList = new ArrayList<>();
 
-    private static final String PERSON_PROPERTY_NAME = "name";
-    private static final String PERSON_PROPERTY_EMAIL = "email";
-    private static final String PERSON_PROPERTY_PHONE = "phone";
-    private static final String PERSON_PROPERTY_ADDRESS = "address";
+    private static final String PERSON_DETAIL_NAME = "name";
+    private static final String PERSON_DETAIL_EMAIL = "email";
+    private static final String PERSON_DETAIL_PHONE = "phone";
+    private static final String PERSON_DETAIL_ADDRESS = "address";
 
     /**
      * Constructs empty person list.
@@ -128,32 +128,32 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * Replaces a person's target property with the new property.
+     * Replaces a person's target detail with the new detail.
      *
-     * @param toEdit person whose property is to be edited
-     * @param property to be replaced
-     * @param newProperty replaces the current property
+     * @param toEdit person whose detail is to be edited
+     * @param detail to be replaced
+     * @param newDetail replaces the current detail
      *
      * @throws PersonNotFoundException if no such person could be found in the list.
-     * @throws IllegalValueException if new property string provided is invalid.
+     * @throws IllegalValueException if new detail string provided is invalid.
      */
-    public void edit(Person toEdit, String property, String newProperty)
+    public void edit(Person toEdit, String detail, String newDetail)
             throws PersonNotFoundException, IllegalValueException {
         if (!internalList.contains(toEdit)) {
             throw new PersonNotFoundException();
         }
-        switch (property) {
-            case PERSON_PROPERTY_NAME:
-                toEdit.editName(newProperty);
+        switch (detail) {
+            case PERSON_DETAIL_NAME:
+                toEdit.editName(newDetail);
                 break;
-            case PERSON_PROPERTY_EMAIL:
-                toEdit.editEmail(newProperty);
+            case PERSON_DETAIL_EMAIL:
+                toEdit.editEmail(newDetail);
                 break;
-            case PERSON_PROPERTY_PHONE:
-                toEdit.editPhone(newProperty);
+            case PERSON_DETAIL_PHONE:
+                toEdit.editPhone(newDetail);
                 break;
-            case PERSON_PROPERTY_ADDRESS:
-                toEdit.editAddress(newProperty);
+            case PERSON_DETAIL_ADDRESS:
+                toEdit.editAddress(newDetail);
                 break;
         }
     }
