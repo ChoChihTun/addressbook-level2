@@ -63,7 +63,7 @@ and persons matching at least one keyword will be returned (i.e. `OR` search).
 Examples: 
 * `find John`<br>
   Returns `John Doe` but not `john`
-* `find Betsy Tim John`<br>
+* `find Betsy Tim john`<br>
   Returns Any person having names `Betsy`, `Tim`, or `John`
 
 ### Deleting a person : `delete`
