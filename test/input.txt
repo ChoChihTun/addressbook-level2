@@ -141,6 +141,55 @@
   list
 
 ##########################################################
+# test edit person command
+##########################################################
+
+# last active view: [1] betsy [2] dickson
+
+  # should catch invalid args format
+  edit
+  edit should have only two parameters
+
+  # should catch invalid index
+  edit -1 name
+  edit 0 name
+  edit 3 name
+
+  # should catch invalid detail
+  edit 1 unknownDetail
+
+  # should catch invalid person data
+  edit 1 name
+  []\[;]
+  edit 1 phone
+  not_numbers
+  edit 1 email
+  notAnEmail
+
+  # should edit name correctly
+  edit 1 name
+  Adam Brown
+  viewall 1
+
+  # should edit phone correctly
+  edit 1 phone
+  111111
+  viewall 1
+
+  # should edit email correctly
+  edit 1 email
+  adam@gmail.com
+  viewall 1
+
+  # should edit address correctly
+  edit 1 address
+  111, alpha street
+  viewall 1
+
+  # should have edited based on last active view's index
+  list
+
+##########################################################
 # test clear command
 ##########################################################
 

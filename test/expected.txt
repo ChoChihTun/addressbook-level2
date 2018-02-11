@@ -12,6 +12,9 @@
 || delete: Deletes the person identified by the index number used in the last person listing.
 || Parameters: INDEX
 || Example: delete 1
+|| edit: Edits a person's detail identified by the index number used in the last find/list call and the name of the detail to be edited.
+|| Parameters: INDEX DETAIL
+|| Example: edit 1 name
 || Clears address book permanently.
 || Example: clear
 || find: Finds all persons whose names contain any of the specified keywords (case-sensitive) and displays them as a list with index numbers.
@@ -289,6 +292,76 @@
 || 	2. Dickson Ee Phone: 444444 Address: 444, delta street Tags: [friends]
 || 
 || 2 persons listed!
+|| ===================================================
+|| Enter command: || [Command entered:  edit]
+|| Invalid command format! 
+|| edit: Edits a person's detail identified by the index number used in the last find/list call and the name of the detail to be edited.
+|| Parameters: INDEX DETAIL
+|| Example: edit 1 name
+|| ===================================================
+|| Enter command: || [Command entered:  edit should have only two parameters]
+|| The person index provided is invalid
+|| ===================================================
+|| Enter command: || [Command entered:  edit -1 name]
+|| The person index provided is invalid
+|| ===================================================
+|| Enter command: || [Command entered:  edit 0 name]
+|| The person index provided is invalid
+|| ===================================================
+|| Enter command: || [Command entered:  edit 3 name]
+|| The person index provided is invalid
+|| ===================================================
+|| Enter command: || [Command entered:  edit 1 unknownDetail]
+|| The detail does not exist in address book
+|| ===================================================
+|| Enter command: || [Command entered:  edit 1 name]
+|| Enter new name: || [Command entered:  []\[;]]
+|| [name entered: []\[;]]
+|| name provided is invalid
+|| ===================================================
+|| Enter command: || [Command entered:  edit 1 phone]
+|| Enter new phone: || [Command entered:  not_numbers]
+|| [phone entered: not_numbers]
+|| phone provided is invalid
+|| ===================================================
+|| Enter command: || [Command entered:  edit 1 email]
+|| Enter new email: || [Command entered:  notAnEmail]
+|| [email entered: notAnEmail]
+|| email provided is invalid
+|| ===================================================
+|| Enter command: || [Command entered:  edit 1 name]
+|| Enter new name: || [Command entered:  Adam Brown]
+|| Edited Person: Adam Brown  Phone Number: (private) 222222  Email: benchoo@nus.edu.sg Address: (private) 222, beta street Tags: [secretive]
+|| ===================================================
+|| Enter command: || [Command entered:  viewall 1]
+|| Viewing person: Adam Brown Phone: (private) 222222 Email: (private) benchoo@nus.edu.sg Address: (private) 222, beta street Tags: [secretive]
+|| ===================================================
+|| Enter command: || [Command entered:  edit 1 phone]
+|| Enter new phone: || [Command entered:  111111]
+|| Edited Person: Adam Brown  Phone Number: (private) 111111  Email: benchoo@nus.edu.sg Address: (private) 222, beta street Tags: [secretive]
+|| ===================================================
+|| Enter command: || [Command entered:  viewall 1]
+|| Viewing person: Adam Brown Phone: (private) 111111 Email: (private) benchoo@nus.edu.sg Address: (private) 222, beta street Tags: [secretive]
+|| ===================================================
+|| Enter command: || [Command entered:  edit 1 email]
+|| Enter new email: || [Command entered:  adam@gmail.com]
+|| Edited Person: Adam Brown Phone: (private) 111111 Email: (private) adam@gmail.com Address: (private) 222, beta street Tags: [secretive]
+|| ===================================================
+|| Enter command: || [Command entered:  viewall 1]
+|| Viewing person: Adam Brown Phone: (private) 111111 Email: (private) adam@gmail.com Address: (private) 222, beta street Tags: [secretive]
+|| ===================================================
+|| Enter command: || [Command entered:  edit 1 address]
+|| Enter new email: || [Command entered:  111, alpha street]
+|| Edited Person: Adam Brown Phone: (private) 111111 Email: (private) adam@gmail.com Address: (private) 111, alpha street Tags: [secretive]
+|| ===================================================
+|| Enter command: || [Command entered:  viewall 1]
+|| Viewing person: Adam Brown Phone: (private) 111111 Email: (private) adam@gmail.com Address: (private) 111, alpha street Tags: [secretive]
+|| ===================================================
+|| Enter command: || [Command entered:  list]
+|| 	1. Adam Brown Tags: [secretive]
+|| 	2. Dickson Ee  Phone Number: 444444  Email: dickson@nus.edu.sg
+|| 
+|| 2 persons found!
 || ===================================================
 || Enter command: || [Command entered:  clear]
 || Address book has been cleared!
