@@ -93,27 +93,6 @@ public class TextUi {
         return fullInputLine;
     }
 
-    /**
-     * Prompts for the new detail and reads the text entered by the user.
-     * Ignores empty, pure whitespace, and comment lines.
-
-     * @param detail the detail that has to be edited
-     * @return new detail entered by the user.
-     */
-    public String getNewDetail(String detail) {
-        out.print(LINE_PREFIX + String.format(NEW_DETAIL_PROMPT, detail));
-        String newDetail = in.nextLine();
-
-        // silently consume all ignored lines
-        while (shouldIgnore(newDetail)) {
-            newDetail = in.nextLine();
-        }
-
-        showToUser("[" + detail + " entered: " + newDetail + "]");
-        return newDetail;
-    }
-
-
     public void showWelcomeMessage(String version, String storageFilePath) {
         String storageFileInfo = String.format(MESSAGE_USING_STORAGE_FILE, storageFilePath);
         showToUser(

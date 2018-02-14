@@ -44,7 +44,7 @@ public class Parser {
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
 
-    private static final Pattern EDIT_PERSON_ARGS_FORMAT = Pattern.compile("(?<targetIndex>.+\\S)");
+    private static final Pattern EDIT_PERSON_ARGS_FORMAT = Pattern.compile("(?<targetIndex>.+\\S\\s.+)");
 
     private static final Pattern EDIT_PERSON_DETAIL_FORMAT = Pattern.compile("(?<detail>\\b(name|address|email|phone)\\b)");
 
@@ -187,7 +187,6 @@ public class Parser {
 
     /**
      * Parses arguments in the context of the edit person command.
-     * If arguments are valid, prompt user for new detail.
      *
      * @param args full command args string
      * @return the prepared command
@@ -198,11 +197,13 @@ public class Parser {
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
-        int indexOfDelimiterInArgs = args.trim().indexOf(" ");
+        int indexOfFirstDelimiterInArgs = args.trim().indexOf(" ");
+        int indexOfSecondDelimiterInArgs = args.trim().indexOf(" ", indexOfFirstDelimiterInArgs+1);
         try {
-            final int targetIndex = parseArgsAsDisplayedIndex(args.trim().substring(0,indexOfDelimiterInArgs));
-            final String detail = parseArgsAsInputDetail(args.trim().substring(indexOfDelimiterInArgs));
-            return new EditCommand(targetIndex, detail);
+            final int targetIndex = parseArgsAsDisplayedIndex(args.trim().substring(0,indexOfFirstDelimiterInArgs));
+            final String detail = parseArgsAsInputDetail(args.trim().substring(indexOfFirstDelimiterInArgs+1, indexOfSecondDelimiterInArgs));
+            final String newDetail = args.trim().substring(indexOfSecondDelimiterInArgs);
+            return new EditCommand(targetIndex, detail, newDetail);
         } catch (ParseException pe) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         } catch (NumberFormatException nfe) {
