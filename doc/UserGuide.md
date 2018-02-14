@@ -83,9 +83,7 @@ Examples:
 
 ### Editing a person's detail: `edit`
 Edits the specified person's detail from the address book.
-Format: `edit INDEX DETAIL`<br>
-System prompts user to input the new detail.
-Format: `NEW_DETAIL` <br>
+Format: `edit INDEX DETAIL NEWDETAIL`<br>
 
 > Edits the person at the specified `INDEX`. 
   The index refers to the index number shown in the most recent listing.
@@ -93,19 +91,17 @@ Format: `NEW_DETAIL` <br>
 > Edits the person's detail at the specified `DETAIL`.
   The detail refers to the type of person's detail.
   
-> Inputs `NEW_DETAIL`.
+> Replaces person's old detail with `NEW_DETAIL`.
   The new detail refers to the new information that is replacing the old detail.
 
 Examples:
 * `list`<br>
-  `edit 2 address` <br>
+  `edit 2 address Newton Street` <br>
   Edits the 2nd person's address in the address book.
-  `Newton Street`
   Replaces the person's old address with the new one.
 * `find John`<br>
-  `edit 1 phone` <br>
-  `12345678`<br>
-  Edits the 1st person in the results of the `find` command.
+  `edit 1 phone 12345678` <br>
+  Edits the 1st person's phone detail in the results of the `find` command.
 
 ### View non-private details of a person : `view`
 Displays the non-private details of the specified person.<br>
