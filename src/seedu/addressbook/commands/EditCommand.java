@@ -5,6 +5,9 @@ import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.Person;
 import seedu.addressbook.data.person.UniquePersonList.PersonNotFoundException;
 
+/**
+ * Edits a specified person's detail identified using the last displayed index from the address book.
+ */
 public class EditCommand extends Command{
 
     public static final String COMMAND_WORD = "edit";
@@ -18,9 +21,9 @@ public class EditCommand extends Command{
 
     private static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
 
-    private static String detail;
+    private final String detail;
 
-    private static String newDetail;
+    private final String newDetail;
 
     public EditCommand(int targetVisibleIndex, String detail, String newDetail) {
         super(targetVisibleIndex);

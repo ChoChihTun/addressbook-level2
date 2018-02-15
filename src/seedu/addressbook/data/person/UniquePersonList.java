@@ -144,16 +144,16 @@ public class UniquePersonList implements Iterable<Person> {
         }
         switch (detail) {
             case PERSON_DETAIL_NAME:
-                toEdit.editName(newDetail);
+                toEdit.setName(newDetail);
                 break;
             case PERSON_DETAIL_EMAIL:
-                toEdit.editEmail(newDetail);
+                toEdit.setEmail(newDetail);
                 break;
             case PERSON_DETAIL_PHONE:
-                toEdit.editPhone(newDetail);
+                toEdit.setPhone(newDetail);
                 break;
             case PERSON_DETAIL_ADDRESS:
-                toEdit.editAddress(newDetail);
+                toEdit.setAddress(newDetail);
                 break;
         }
     }

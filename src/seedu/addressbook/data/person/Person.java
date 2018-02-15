@@ -36,16 +36,16 @@ public class Person implements ReadOnlyPerson {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getTags());
     }
 
-    public void editName(String newName) throws IllegalValueException {
+    public void setName(String newName) throws IllegalValueException {
         name.editCurrentName(newName);
     }
-    public void editEmail(String newEmail) throws IllegalValueException {
+    public void setEmail(String newEmail) throws IllegalValueException {
         email.editCurrentEmail(newEmail);
     }
-    public void editPhone(String newPhone) throws IllegalValueException {
+    public void setPhone(String newPhone) throws IllegalValueException {
         phone.editCurrentPhone(newPhone);
     }
-    public void editAddress (String newAddress) throws IllegalValueException {
+    public void setAddress(String newAddress) throws IllegalValueException {
         address.editCurrentAddress(newAddress);
     }
 
