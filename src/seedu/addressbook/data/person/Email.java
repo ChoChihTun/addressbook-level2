@@ -13,7 +13,7 @@ public class Email {
             "Person emails should be 2 alphanumeric/period strings separated by '@'";
     public static final String EMAIL_VALIDATION_REGEX = "[\\w\\.]+@[\\w\\.]+";
 
-    public String value;
+    private String value;
     private boolean isPrivate;
 
     /**
@@ -71,5 +71,12 @@ public class Email {
 
     public boolean isPrivate() {
         return isPrivate;
+    }
+
+    /**
+     * Returns person's email address
+     */
+    public String getValue() {
+        return value;
     }
 }

@@ -12,7 +12,7 @@ public class Phone {
     public static final String MESSAGE_PHONE_CONSTRAINTS = "Person phone numbers should only contain numbers";
     public static final String PHONE_VALIDATION_REGEX = "\\d+";
 
-    public String value;
+    private String value;
     private boolean isPrivate;
 
     /**
@@ -69,5 +69,12 @@ public class Phone {
 
     public boolean isPrivate() {
         return isPrivate;
+    }
+
+    /**
+     * Returns person's phone number
+     */
+    public String getValue() {
+        return value;
     }
 }

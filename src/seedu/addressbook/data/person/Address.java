@@ -12,7 +12,7 @@ public class Address {
     public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Person addresses can be in any format";
     public static final String ADDRESS_VALIDATION_REGEX = ".+";
 
-    public String value;
+    private String value;
     private boolean isPrivate;
 
     /**
@@ -69,5 +69,12 @@ public class Address {
 
     public boolean isPrivate() {
         return isPrivate;
+    }
+
+    /**
+     * Returns person's address
+     */
+    public String getValue() {
+        return value;
     }
 }

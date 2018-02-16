@@ -14,7 +14,7 @@ public class Name {
     public static final String EXAMPLE = "John Doe";
     public static final String MESSAGE_NAME_CONSTRAINTS = "Person names should be spaces or alphabetic characters";
     public static final String NAME_VALIDATION_REGEX = "[\\p{Alpha} ]+";
-    public String fullName;
+    private String fullName;
 
     /**
      * Validates given name.
@@ -74,4 +74,10 @@ public class Name {
         return fullName.hashCode();
     }
 
+    /**
+     * Returns person's full name
+     */
+    public String getFullName() {
+        return fullName;
+    }
 }
