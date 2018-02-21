@@ -47,6 +47,9 @@ public class UtilsTest {
 
     @Test
     public void isAnyNull() throws Exception {
+        // Object is empty
+        assertAreNotNull("");
+        
         // All objects are null
         assertAreNull(null, null, null);
         assertAreNull((Object) null);
@@ -54,7 +57,6 @@ public class UtilsTest {
         // All objects are not null
         assertAreNotNull("abc");
         assertAreNotNull(1);
-        assertAreNotNull("");
         assertAreNotNull("", "a", 1);
         assertAreNotNull();
 
