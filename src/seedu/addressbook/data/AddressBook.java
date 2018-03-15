@@ -1,5 +1,6 @@
 package seedu.addressbook.data;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -12,6 +13,7 @@ import seedu.addressbook.data.person.UniquePersonList.DuplicatePersonException;
 import seedu.addressbook.data.person.UniquePersonList.PersonNotFoundException;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
+import seedu.addressbook.ui.TextUi;
 
 /**
  * Represents the entire address book. Contains the data of the address book.
@@ -24,6 +26,10 @@ public class AddressBook {
 
     private final UniquePersonList allPersons;
     private final UniqueTagList allTags; // can contain tags not attached to any person
+    private ArrayList<Tagging> taggingList = new ArrayList<>();
+
+    private static final String ADD_TAG = "+";
+    private static final String SUBTRACT_TAG = "-";
 
     /**
      * Creates an empty address book.
@@ -81,6 +87,12 @@ public class AddressBook {
     public void addPerson(Person toAdd) throws DuplicatePersonException {
         allPersons.add(toAdd);
         syncTagsWithMasterList(toAdd);
+
+        Set<Tag> personTagList = toAdd.getTags().toSet();
+        for (Tag tag : personTagList) {
+            Tagging newTagging = new Tagging(toAdd, tag, ADD_TAG);
+            taggingList.add(newTagging);
+        }
     }
 
     /**
@@ -97,6 +109,13 @@ public class AddressBook {
      */
     public void removePerson(ReadOnlyPerson toRemove) throws PersonNotFoundException {
         allPersons.remove(toRemove);
+
+        Set<Tag> personTagList = toRemove.getTags().toSet();
+        for (Tag tag : personTagList) {
+            Tagging newTagging = new Tagging((Person)toRemove, tag, SUBTRACT_TAG);
+            taggingList.add(newTagging);
+
+        }
     }
 
     /**
@@ -128,4 +147,16 @@ public class AddressBook {
                         && this.allPersons.equals(((AddressBook) other).allPersons)
                         && this.allTags.equals(((AddressBook) other).allTags));
     }
+
+    /**
+     * Retrieves all the tagging events and prints them out
+     */
+    public void showTaggingEvents() {
+        TextUi ui = new TextUi();
+        for (Tagging tagging: taggingList) {
+            String taggingEvent = tagging.toString();
+            ui.showToUser(taggingEvent);
+        }
+    }
+    
 }
