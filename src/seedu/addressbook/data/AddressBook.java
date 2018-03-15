@@ -158,5 +158,5 @@ public class AddressBook {
             ui.showToUser(taggingEvent);
         }
     }
-    
+
 }
